@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pension Tax Calculator 2025/26</title>
+    <title>Pension Withdrawal Tax Calculator 2025/26</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -19,50 +15,14 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 820px;
             margin: 0 auto;
             padding: 24px 16px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        header h1 {
-            font-size: 24px;
-            font-weight: 600;
-            color: #1a1a2e;
-        }
-
-        header p {
-            color: #636e72;
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        .intro {
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 24px;
-            margin-bottom: 24px;
-            font-size: 14px;
-            color: #555;
-            line-height: 1.7;
-        }
-
-        .intro p {
-            margin-bottom: 12px;
-        }
-
-        .intro p:last-child {
-            margin-bottom: 0;
-        }
-
-        .intro strong {
-            color: #2d3436;
-        }
+        header { text-align: center; margin-bottom: 24px; }
+        header h1 { font-size: 24px; font-weight: 600; color: #1a1a2e; }
+        header p { color: #636e72; font-size: 14px; margin-top: 4px; }
 
         .card {
             background: #fff;
@@ -81,37 +41,46 @@
             border-bottom: 2px solid #f0f0f0;
         }
 
-        .form-group {
-            margin-bottom: 16px;
+        .card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin: 20px 0 12px;
         }
 
-        .form-group:last-child {
-            margin-bottom: 0;
+        .intro {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 24px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.7;
         }
+        .intro p { margin-bottom: 12px; }
+        .intro p:last-child { margin-bottom: 0; }
+        .intro strong { color: #2d3436; }
 
-        .form-group label {
+        /* Forms */
+        .form-group { margin-bottom: 20px; }
+        .form-group:last-child { margin-bottom: 0; }
+        .form-group > label {
             display: block;
             font-size: 14px;
             font-weight: 500;
-            color: #555;
+            color: #333;
             margin-bottom: 6px;
         }
 
-        .input-wrapper {
-            position: relative;
-        }
-
+        .input-wrapper { position: relative; max-width: 300px; }
         .input-wrapper .currency-symbol {
-            position: absolute;
-            left: 12px;
-            top: 50%;
+            position: absolute; left: 12px; top: 50%;
             transform: translateY(-50%);
-            color: #999;
-            font-size: 16px;
-            font-weight: 500;
+            color: #999; font-size: 16px; font-weight: 500;
         }
 
-        .form-group input {
+        .form-group input[type="number"] {
             width: 100%;
             padding: 10px 12px 10px 28px;
             border: 2px solid #e0e0e0;
@@ -119,8 +88,7 @@
             font-size: 16px;
             transition: border-color 0.2s;
         }
-
-        .form-group input:focus {
+        .form-group input[type="number"]:focus {
             outline: none;
             border-color: #4a6cf7;
         }
@@ -131,48 +99,180 @@
             margin-top: 4px;
         }
 
-        .results-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .result-item {
-            background: #f8f9ff;
+        /* Radio buttons */
+        .radio-group { margin-top: 8px; }
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border: 2px solid #e8e8e8;
             border-radius: 8px;
-            padding: 16px;
-            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .radio-option:hover { border-color: #c0c0c0; background: #fafafa; }
+        .radio-option.selected {
+            border-color: #4a6cf7;
+            background: #f0f3ff;
+        }
+        .radio-option input[type="radio"] {
+            margin-top: 2px;
+            margin-right: 12px;
+            accent-color: #4a6cf7;
+            flex-shrink: 0;
+        }
+        .radio-option .radio-text {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
         }
 
-        .result-item.highlight {
+        /* Step indicator */
+        .step-indicator {
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 8px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.15s;
+        }
+        .btn-primary {
             background: #4a6cf7;
             color: #fff;
         }
+        .btn-primary:hover { background: #3a5ce5; }
+        .btn-primary:disabled {
+            background: #c0c0c0;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: #fff;
+            color: #4a6cf7;
+            border-color: #4a6cf7;
+        }
+        .btn-secondary:hover { background: #f0f3ff; }
 
-        .result-item .result-label {
+        .btn-row {
+            margin-top: 24px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        /* Tax mode tabs */
+        .tab-group {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+        .tab-group button {
+            flex: 1;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            background: #fff;
+            color: #666;
+            transition: all 0.15s;
+        }
+        .tab-group button:not(:last-child) {
+            border-right: 2px solid #e0e0e0;
+        }
+        .tab-group button.active {
+            background: #4a6cf7;
+            color: #fff;
+        }
+        .tab-group button:hover:not(.active) {
+            background: #f5f5f5;
+        }
+
+        /* Info callout */
+        .callout {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .callout-success {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            color: #2e7d32;
+        }
+        .callout-info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            color: #1565c0;
+        }
+        .callout-warning {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            color: #f57f17;
+        }
+        .callout strong { font-weight: 700; }
+
+        /* Summary table */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .summary-table thead th {
+            text-align: right;
+            padding: 10px 12px;
+            background: #f8f9ff;
+            font-weight: 600;
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            opacity: 0.7;
-            margin-bottom: 4px;
+            color: #666;
         }
-
-        .result-item .result-value {
-            font-size: 24px;
+        .summary-table thead th:first-child { text-align: left; }
+        .summary-table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+        .summary-table tbody td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+        .summary-table tfoot td {
+            padding: 12px;
             font-weight: 700;
+            border-top: 2px solid #ddd;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
         }
+        .summary-table tfoot td:first-child { text-align: left; }
 
-        .result-item.highlight .result-label {
-            opacity: 0.85;
-        }
-
-        table {
+        /* Breakdown table */
+        .breakdown-table {
             width: 100%;
             border-collapse: collapse;
             font-size: 14px;
         }
-
-        thead th {
+        .breakdown-table thead th {
             text-align: left;
             padding: 10px 12px;
             background: #f8f9ff;
@@ -182,43 +282,80 @@
             letter-spacing: 0.5px;
             color: #666;
         }
-
-        thead th:not(:first-child) {
-            text-align: right;
-        }
-
-        tbody td {
+        .breakdown-table thead th:not(:first-child) { text-align: right; }
+        .breakdown-table tbody td {
             padding: 10px 12px;
             border-bottom: 1px solid #f0f0f0;
         }
-
-        tbody td:not(:first-child) {
+        .breakdown-table tbody td:not(:first-child) {
             text-align: right;
             font-variant-numeric: tabular-nums;
         }
-
-        tfoot td {
+        .breakdown-table tfoot td {
             padding: 10px 12px;
             font-weight: 700;
-            border-top: 2px solid #e0e0e0;
+            border-top: 2px solid #ddd;
         }
-
-        tfoot td:not(:first-child) {
+        .breakdown-table tfoot td:not(:first-child) {
             text-align: right;
             font-variant-numeric: tabular-nums;
         }
-
-        .band-name {
-            font-weight: 500;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 32px;
+        .band-rate { font-weight: 700; color: #1a1a2e; }
+        .band-desc { color: #666; font-size: 13px; }
+        .band-note {
+            display: block;
+            font-size: 12px;
             color: #999;
-            font-size: 14px;
+            font-style: italic;
+            margin-top: 2px;
         }
 
+        /* Accordion */
+        .accordion { margin-bottom: 12px; }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+            background: #fff;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            transition: all 0.15s;
+        }
+        .accordion-header:hover { border-color: #c0c0c0; }
+        .accordion-header.open {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-color: #4a6cf7;
+            color: #4a6cf7;
+        }
+        .accordion-icon {
+            transition: transform 0.2s;
+            font-size: 12px;
+        }
+        .accordion-icon.open { transform: rotate(180deg); }
+        .accordion-body {
+            padding: 16px 20px;
+            background: #fff;
+            border: 2px solid #e8e8e8;
+            border-top: none;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.7;
+        }
+        .accordion-body ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+        .accordion-body ul li { margin-bottom: 8px; }
+
+        /* Notes */
         .notes {
             background: #fff;
             border-radius: 12px;
@@ -226,148 +363,294 @@
             padding: 24px;
             margin-bottom: 24px;
         }
-
         .notes h3 {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1a1a2e;
+            font-size: 14px; font-weight: 600; color: #1a1a2e;
             margin-bottom: 12px;
         }
-
-        .notes ul {
-            list-style: none;
-            padding: 0;
-        }
-
+        .notes ul { list-style: none; padding: 0; }
         .notes ul li {
-            font-size: 13px;
-            color: #666;
+            font-size: 13px; color: #666;
             padding: 4px 0 4px 16px;
             position: relative;
         }
-
         .notes ul li::before {
-            content: "\2022";
-            position: absolute;
-            left: 0;
-            color: #4a6cf7;
+            content: "\2022"; position: absolute;
+            left: 0; color: #4a6cf7;
+        }
+        .notes .disclaimer {
+            font-size: 12px; color: #999;
+            margin-top: 12px; padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
         }
 
-        .notes .disclaimer {
-            font-size: 12px;
-            color: #999;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid #f0f0f0;
+        /* Print */
+        @media print {
+            body { background: #fff; }
+            .card, .notes { box-shadow: none; border: 1px solid #ddd; }
+            .btn, .tab-group, .accordion-header, .step-indicator { display: none; }
+            .accordion-body { display: block !important; border: none; padding: 0; }
         }
     </style>
 </head>
 <body>
     <div class="container" ng-controller="MyCtrl" ng-init="init()">
         <header>
-            <h1>Pension Tax Calculator</h1>
+            <h1>Pension Withdrawal Tax Calculator</h1>
             <p>UK Income Tax Rates 2025/26</p>
         </header>
 
-        <div class="intro">
-            <p>Use our pension tax calculator to find out the amount and percentage rate of income tax you'll pay on the pension funds you withdraw.</p>
-            <p>Tempting as it is to take your pension fund as cash, beware the sting in the tail &ndash; while you can normally take a 25% tax-free lump sum, you'll pay tax on the rest (at a rate linked to all income you receive in that year).</p>
-            <p>This calculator shows you the amount and percentage rate of income tax payable on your pension fund if it is withdrawn in addition to your other taxable income.</p>
-        </div>
-
-        <div class="card">
-            <h2>Your Details</h2>
-            <div class="form-group">
-                <label for="income">Total gross income for tax year (excluding pension to cash in)</label>
-                <div class="input-wrapper">
-                    <span class="currency-symbol">&pound;</span>
-                    <input type="number" id="income" ng-model="userInfo.income" ng-change="updateposition()" placeholder="e.g. 54000" min="0">
-                </div>
-                <div class="form-hint">Please enter figures without commas i.e. 54000</div>
+        <!-- ============================================ -->
+        <!-- STEP 1: INPUTS                               -->
+        <!-- ============================================ -->
+        <div ng-show="currentStep === 1">
+            <div class="intro">
+                <p>Use our pension tax calculator to find out the amount and percentage rate of income tax you'll pay on the pension funds you withdraw.</p>
+                <p>Tempting as it is to take your pension fund as cash, beware the sting in the tail &ndash; while you can normally take a 25% tax-free lump sum, you'll pay tax on the rest (at a rate linked to all income you receive in that year).</p>
+                <p><strong>Step 1:</strong> Enter the information below. <strong>Step 2:</strong> Review your results and see how the tax has been calculated.</p>
             </div>
-            <div class="form-group">
-                <label for="pension">Pension fund to withdraw (after tax-free cash)</label>
-                <div class="input-wrapper">
-                    <span class="currency-symbol">&pound;</span>
-                    <input type="number" id="pension" ng-model="userInfo.pensionwithdrwal" ng-change="updateposition()" placeholder="e.g. 10000" min="0">
+
+            <div class="card">
+                <div class="step-indicator">Step 1 of 2</div>
+                <h2>Your Details</h2>
+
+                <div class="form-group">
+                    <label>Lump sum amount you want to take from your pension pot</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">&pound;</span>
+                        <input type="number" ng-model="userInfo.grossWithdrawal" placeholder="e.g. 50000" min="0">
+                    </div>
+                    <div class="form-hint">Enter the total amount before any tax-free cash is taken. Please enter figures without commas.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Other taxable income for the tax year</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">&pound;</span>
+                        <input type="number" ng-model="userInfo.income" placeholder="e.g. 54000" min="0">
+                    </div>
+                    <div class="form-hint">Include any salary, state pension and defined benefit pension income, but exclude savings and dividend income.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>How would you like to take your tax-free cash?</label>
+                    <div class="radio-group">
+                        <label class="radio-option" ng-class="{'selected': userInfo.taxFreeOption === 'allUpfront'}" ng-click="userInfo.taxFreeOption = 'allUpfront'">
+                            <input type="radio" ng-model="userInfo.taxFreeOption" value="allUpfront">
+                            <span class="radio-text">All of my available tax-free lump sum first</span>
+                        </label>
+                        <label class="radio-option" ng-class="{'selected': userInfo.taxFreeOption === 'each25'}" ng-click="userInfo.taxFreeOption = 'each25'">
+                            <input type="radio" ng-model="userInfo.taxFreeOption" value="each25">
+                            <span class="radio-text">Up to 25% of each withdrawal tax-free</span>
+                        </label>
+                        <label class="radio-option" ng-class="{'selected': userInfo.taxFreeOption === 'custom'}" ng-click="userInfo.taxFreeOption = 'custom'">
+                            <input type="radio" ng-model="userInfo.taxFreeOption" value="custom">
+                            <span class="radio-text">Specify the tax-free lump sum I want to take now</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="userInfo.taxFreeOption === 'custom'" style="margin-top: -8px;">
+                    <label>Tax-free lump sum amount</label>
+                    <div class="input-wrapper">
+                        <span class="currency-symbol">&pound;</span>
+                        <input type="number" ng-model="userInfo.customTaxFreeAmount" placeholder="e.g. 10000" min="0">
+                    </div>
+                    <div class="form-hint" ng-show="userInfo.grossWithdrawal > 0">Maximum: 25% of your withdrawal (&pound;{{userInfo.grossWithdrawal * 0.25 | number:0}})</div>
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" ng-click="goToResults()" ng-disabled="!userInfo.grossWithdrawal || userInfo.grossWithdrawal <= 0">Get results</button>
                 </div>
             </div>
-        </div>
 
-        <div class="card" ng-show="userInfo.income > 0 || userInfo.pensionwithdrwal > 0">
-            <h2>Summary</h2>
-            <div class="results-grid">
-                <div class="result-item">
-                    <div class="result-label">Total Income</div>
-                    <div class="result-value">&pound;{{totalincome() | number:0}}</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Total Tax</div>
-                    <div class="result-value">&pound;{{sumValue(taxbands, 'amountoftaxtotal') | number:0}}</div>
-                </div>
-                <div class="result-item highlight">
-                    <div class="result-label">Tax on Pension</div>
-                    <div class="result-value">&pound;{{totaltax() | number:0}}</div>
-                </div>
-                <div class="result-item highlight">
-                    <div class="result-label">Effective Pension Tax Rate</div>
-                    <div class="result-value">{{taxPercentage() | number:1}}%</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" ng-show="userInfo.income > 0 || userInfo.pensionwithdrwal > 0">
-            <h2>Tax Breakdown</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Band</th>
-                        <th>Rate</th>
-                        <th>Taxable Amount</th>
-                        <th>Tax on Income</th>
-                        <th>Tax on Pension</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="band in taxbands | taxbandfilter:userInfo.income:totalincome()">
-                        <td class="band-name">
-                            <span ng-if="band.rate == 0">Personal Allowance</span>
-                            <span ng-if="band.rate == 20">Basic Rate</span>
-                            <span ng-if="band.rate == 40">Higher Rate</span>
-                            <span ng-if="band.rate == 45">Additional Rate</span>
-                        </td>
-                        <td>{{band.rate}}%</td>
-                        <td>&pound;{{band.taxableamounttotal | number:0}}</td>
-                        <td>&pound;{{band.amountoftaxincome | number:0}}</td>
-                        <td>&pound;{{band.taxonpension | number:0}}</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2">Total</td>
-                        <td></td>
-                        <td>&pound;{{sumValue(taxbands, 'amountoftaxincome') | number:0}}</td>
-                        <td>&pound;{{totaltax() | number:0}}</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-
-        <div class="card" ng-hide="userInfo.income > 0 || userInfo.pensionwithdrwal > 0">
-            <div class="empty-state">
-                Enter your income and pension withdrawal amount above to see the tax breakdown.
+            <div class="notes">
+                <h3>Notes</h3>
+                <ul>
+                    <li>Figures based on income tax limits for tax year 2025/26</li>
+                    <li>No allowance made for blind person or married persons allowance</li>
+                    <li>Information provided on this calculator is for illustrative purposes only</li>
+                </ul>
+                <p class="disclaimer">Do not make any major financial decisions without consulting a qualified specialist such as an accountant or financial adviser. This calculator uses UK income tax calculations &ndash; excluding Scotland.</p>
             </div>
         </div>
 
-        <div class="notes">
-            <h3>Notes</h3>
-            <ul>
-                <li>Figures based on income tax limits for tax year 2025/26</li>
-                <li>No allowance made for blind person or married persons allowance</li>
-                <li>The calculator assumes that 25% tax-free cash has been taken</li>
-                <li>Information provided on this calculator is for illustrative purposes only</li>
-            </ul>
-            <p class="disclaimer">Do not make any major financial decisions without consulting a qualified specialist such as an accountant or financial adviser. This calculator uses UK income tax calculations &ndash; excluding Scotland.</p>
+        <!-- ============================================ -->
+        <!-- STEP 2: RESULTS                              -->
+        <!-- ============================================ -->
+        <div ng-show="currentStep === 2">
+
+            <div class="card">
+                <div class="step-indicator">Step 2 of 2</div>
+                <h2>Your Results</h2>
+                <p style="font-size: 14px; color: #555; margin-bottom: 16px;">The results show an indication of the income tax you could pay within this tax year on your pension withdrawal and other taxable income. We add all of these together because the income tax you pay on your pension withdrawal depends on which tax band you fall into.</p>
+
+                <!-- Tax mode toggle -->
+                <div class="tab-group">
+                    <button ng-class="{'active': taxMode === 'standard'}" ng-click="setTaxMode('standard')">Standard tax rate</button>
+                    <button ng-class="{'active': taxMode === 'emergency'}" ng-click="setTaxMode('emergency')">Emergency tax code</button>
+                </div>
+
+                <div class="callout callout-warning" ng-show="taxMode === 'emergency'">
+                    Emergency tax is applied when your pension provider does not have your tax code. This typically results in higher tax being deducted. You can reclaim any overpaid tax from HMRC. In this mode, only your pension withdrawal is considered &ndash; your other income is not included as your provider would not know about it.
+                </div>
+
+                <!-- Summary table -->
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Amount before tax</th>
+                            <th>Estimated tax to pay</th>
+                            <th>Amount after tax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pension withdrawal</td>
+                            <td>&pound;{{userInfo.grossWithdrawal | number:2}}</td>
+                            <td>&pound;{{taxOnPension() | number:2}}</td>
+                            <td>&pound;{{pensionAfterTax() | number:2}}</td>
+                        </tr>
+                        <tr ng-show="taxMode === 'standard'">
+                            <td>Other taxable income</td>
+                            <td>&pound;{{(userInfo.income || 0) | number:2}}</td>
+                            <td>&pound;{{taxOnIncome() | number:2}}</td>
+                            <td>&pound;{{incomeAfterTax() | number:2}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr ng-show="taxMode === 'standard'">
+                            <td>Total</td>
+                            <td>&pound;{{((userInfo.grossWithdrawal || 0) + (userInfo.income || 0)) | number:2}}</td>
+                            <td>&pound;{{(taxOnPension() + taxOnIncome()) | number:2}}</td>
+                            <td>&pound;{{(pensionAfterTax() + incomeAfterTax()) | number:2}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="btn-row">
+                    <button class="btn btn-secondary" ng-click="goToInputs()">Edit your details</button>
+                </div>
+            </div>
+
+            <!-- How we calculated -->
+            <div class="card">
+                <h2>How the income tax has been calculated for your pension withdrawal</h2>
+                <p style="font-size: 14px; color: #555; margin-bottom: 16px;">
+                    If you're not sure how we calculated your <strong>&pound;{{taxOnPension() | number:2}}</strong> income tax on your <strong>&pound;{{userInfo.grossWithdrawal | number:0}}</strong> withdrawal, this is how:
+                </p>
+
+                <!-- Tax-free callout -->
+                <div class="callout callout-success">
+                    <strong>{{(taxFreeAmount() / userInfo.grossWithdrawal * 100) | number:0}}%</strong> of your pension withdrawal, <strong>&pound;{{taxFreeAmount() | number:2}}</strong>, will be <strong>TAX FREE</strong>. Whether you receive this will depend on your personal circumstances.
+                </div>
+
+                <h3>Pension withdrawal</h3>
+                <p style="font-size: 14px; color: #555; margin-bottom: 16px;">
+                    The remaining pension withdrawal, <strong>&pound;{{taxablePension() | number:2}}</strong>, will be taxed at the rates below:
+                </p>
+
+                <table class="breakdown-table">
+                    <thead>
+                        <tr>
+                            <th>Income tax rate</th>
+                            <th>Pension income at this band</th>
+                            <th>Estimated tax to pay</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="band in taxbands | taxbandfilter:userInfo.income:totalincome()" ng-show="taxMode === 'standard'">
+                            <td>
+                                <span class="band-rate">{{band.rate}}%</span>
+                                <span class="band-desc"> - {{bandLabel(band.rate)}}</span>
+                            </td>
+                            <td>
+                                &pound;{{band.pensionamountinband | number:2}}
+                                <span class="band-note" ng-show="band.taxableamountincome > 0 && band.pensionamountinband == 0">(Your other income uses this tax band)</span>
+                                <span class="band-note" ng-show="band.taxableamountincome > 0 && band.pensionamountinband > 0">(Your other income uses &pound;{{band.taxableamountincome | number:0}} of this band)</span>
+                            </td>
+                            <td>&pound;{{band.taxonpension | number:2}}</td>
+                        </tr>
+                        <tr ng-repeat="band in taxbands" ng-show="taxMode === 'emergency' && (taxablePension()) > band.minvalue">
+                            <td>
+                                <span class="band-rate">{{band.rate}}%</span>
+                                <span class="band-desc"> - {{bandLabel(band.rate)}}</span>
+                            </td>
+                            <td>&pound;{{band.taxableamounttotal | number:2}}</td>
+                            <td>&pound;{{band.amountoftaxtotal | number:2}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td><strong>&pound;{{taxablePension() | number:2}}</strong></td>
+                            <td><strong>&pound;{{taxOnPension() | number:2}}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Important information accordions -->
+            <div class="card" style="padding: 16px;">
+                <div class="accordion">
+                    <div class="accordion-header" ng-class="{'open': accordions.results}" ng-click="toggleAccordion('results')">
+                        <span>Important information about your results</span>
+                        <span class="accordion-icon" ng-class="{'open': accordions.results}">&#9660;</span>
+                    </div>
+                    <div class="accordion-body" ng-show="accordions.results">
+                        <ul>
+                            <li>The calculations given in this tool are to be used as a rough guide only. The actual tax you pay will depend on your personal circumstances and HMRC tax rules which may change in the future.</li>
+                            <li>We have assumed a Personal Allowance of &pound;12,570 for the 2025/26 tax year based on the information you have given us. However, your actual personal allowance will depend on your personal circumstances.</li>
+                            <li>The tax calculations don't take into account any National Insurance contributions due on non-pension earnings.</li>
+                            <li>We assume the tax-free lump sum amount is within your available lump sum allowance.</li>
+                            <li>We have assumed that any pension withdrawal amounts referred to are from defined contribution pensions.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion">
+                    <div class="accordion-header" ng-class="{'open': accordions.considerations}" ng-click="toggleAccordion('considerations')">
+                        <span>Important considerations for pension withdrawals</span>
+                        <span class="accordion-icon" ng-class="{'open': accordions.considerations}">&#9660;</span>
+                    </div>
+                    <div class="accordion-body" ng-show="accordions.considerations">
+                        <ul>
+                            <li>Once you take money from your pension pot, you can't put it back. Consider carefully whether you need the money now or whether it could continue to grow for the future.</li>
+                            <li>Taking a large lump sum could push you into a higher tax band for that tax year, meaning you pay more tax overall.</li>
+                            <li>If your total income exceeds &pound;100,000, your Personal Allowance will be reduced by &pound;1 for every &pound;2 of income above this limit. This can create an effective tax rate of 60%.</li>
+                            <li>Withdrawing pension money may affect your entitlement to means-tested state benefits.</li>
+                            <li>Once you flexibly access your pension (beyond the tax-free portion), your annual allowance for future pension contributions may be reduced to &pound;10,000 (the Money Purchase Annual Allowance).</li>
+                            <li>Consider spreading withdrawals across multiple tax years to minimise the tax you pay.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion">
+                    <div class="accordion-header" ng-class="{'open': accordions.otherTax}" ng-click="toggleAccordion('otherTax')">
+                        <span>Other tax considerations</span>
+                        <span class="accordion-icon" ng-class="{'open': accordions.otherTax}">&#9660;</span>
+                    </div>
+                    <div class="accordion-body" ng-show="accordions.otherTax">
+                        <ul>
+                            <li>National Insurance contributions are not charged on pension income.</li>
+                            <li>If you live in Scotland, different income tax rates and bands apply. This calculator uses rates for England, Wales and Northern Ireland only.</li>
+                            <li>Savings and dividend income have their own allowances and tax rates which are not included in this calculator.</li>
+                            <li>If you are receiving the State Pension, this counts as taxable income and should be included in your "other taxable income" figure.</li>
+                            <li>If your pension provider deducts tax at an emergency rate, you may be able to reclaim overpaid tax from HMRC using form P50Z or P55, or through your self-assessment tax return.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes">
+                <h3>Notes</h3>
+                <ul>
+                    <li>Figures based on income tax limits for tax year 2025/26</li>
+                    <li>No allowance made for blind person or married persons allowance</li>
+                    <li>Information provided on this calculator is for illustrative purposes only</li>
+                </ul>
+                <p class="disclaimer">Do not make any major financial decisions without consulting a qualified specialist such as an accountant or financial adviser. This calculator uses UK income tax calculations &ndash; excluding Scotland.</p>
+            </div>
         </div>
     </div>
 
