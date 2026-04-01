@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start index.html)",
+      "Bash(gh auth:*)",
+      "Bash(git --version)",
+      "mcp__playwright__browser_navigate",
+      "Bash(npx @playwright/mcp install-browser chrome-for-testing)",
+      "Bash(npx @playwright/mcp install-browser)",
+      "Bash(npx playwright:*)",
+      "mcp__plugin_context-mode_context-mode__ctx_execute"
+    ]
+  }
+}
