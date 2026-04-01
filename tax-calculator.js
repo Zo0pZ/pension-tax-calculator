@@ -207,6 +207,20 @@
                 _total = $scope.userInfo.income;
             }
             $scope.incomechange(_total, $scope.basetaxbands);
+
+            // Calculate tax amounts on basetaxbands for income-only
+            // (these aren't run through the template filter, so we populate them here)
+            var income = ($scope.userInfo.income || 0) * 1;
+            angular.forEach($scope.basetaxbands, function(band) {
+                if (income > band.minvalue) {
+                    if (income > band.maxvalue) {
+                        band.taxableamountincome = band.maxvalue - band.minvalue;
+                    } else {
+                        band.taxableamountincome = income - band.minvalue;
+                    }
+                    band.amountoftaxincome = band.taxableamountincome * (band.rate / 100);
+                }
+            });
         };
 
         $scope.getTotalIncome = function() {
