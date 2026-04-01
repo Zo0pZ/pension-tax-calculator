@@ -26,7 +26,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         header h1 {
@@ -39,6 +39,29 @@
             color: #636e72;
             font-size: 14px;
             margin-top: 4px;
+        }
+
+        .intro {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 24px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        .intro p {
+            margin-bottom: 12px;
+        }
+
+        .intro p:last-child {
+            margin-bottom: 0;
+        }
+
+        .intro strong {
+            color: #2d3436;
         }
 
         .card {
@@ -60,6 +83,10 @@
 
         .form-group {
             margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
         }
 
         .form-group label {
@@ -96,6 +123,12 @@
         .form-group input:focus {
             outline: none;
             border-color: #4a6cf7;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
         }
 
         .results-grid {
@@ -186,11 +219,46 @@
             font-size: 14px;
         }
 
-        .note {
+        .notes {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .notes h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 12px;
+        }
+
+        .notes ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .notes ul li {
+            font-size: 13px;
+            color: #666;
+            padding: 4px 0 4px 16px;
+            position: relative;
+        }
+
+        .notes ul li::before {
+            content: "\2022";
+            position: absolute;
+            left: 0;
+            color: #4a6cf7;
+        }
+
+        .notes .disclaimer {
             font-size: 12px;
             color: #999;
-            margin-top: 16px;
-            text-align: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
         }
     </style>
 </head>
@@ -201,17 +269,24 @@
             <p>UK Income Tax Rates 2025/26</p>
         </header>
 
+        <div class="intro">
+            <p>Use our pension tax calculator to find out the amount and percentage rate of income tax you'll pay on the pension funds you withdraw.</p>
+            <p>Tempting as it is for your clients to take their pension fund as cash, beware the sting in the tail &ndash; while they can normally take a 25% tax-free lump sum, remember they'll pay tax on the rest (at a rate linked to all income received in that year).</p>
+            <p>Our calculator shows them the amount and percentage rate of income tax payable on their pension fund if it is withdrawn in addition to other taxable income.</p>
+        </div>
+
         <div class="card">
-            <h2>Your Details</h2>
+            <h2>Enter Your Details</h2>
             <div class="form-group">
-                <label for="income">Annual income (before tax)</label>
+                <label for="income">Total gross income for tax year (excluding pension to cash in)</label>
                 <div class="input-wrapper">
                     <span class="currency-symbol">&pound;</span>
-                    <input type="number" id="income" ng-model="userInfo.income" ng-change="updateposition()" placeholder="e.g. 35000" min="0">
+                    <input type="number" id="income" ng-model="userInfo.income" ng-change="updateposition()" placeholder="e.g. 54000" min="0">
                 </div>
+                <div class="form-hint">Please enter figures without commas i.e. 54000</div>
             </div>
             <div class="form-group">
-                <label for="pension">Pension withdrawal amount</label>
+                <label for="pension">Pension fund to withdraw (after tax-free cash)</label>
                 <div class="input-wrapper">
                     <span class="currency-symbol">&pound;</span>
                     <input type="number" id="pension" ng-model="userInfo.pensionwithdrwal" ng-change="updateposition()" placeholder="e.g. 10000" min="0">
@@ -284,10 +359,16 @@
             </div>
         </div>
 
-        <p class="note">
-            Based on HMRC rates for England, Wales &amp; Northern Ireland 2025/26. Scottish rates differ.
-            This is for guidance only and does not constitute tax advice.
-        </p>
+        <div class="notes">
+            <h3>Notes</h3>
+            <ul>
+                <li>Figures based on income tax limits for tax year 2025/26</li>
+                <li>No allowance made for blind person or married persons allowance</li>
+                <li>The calculator assumes that 25% tax-free cash has been taken</li>
+                <li>Information provided on this calculator is for illustrative purposes only</li>
+            </ul>
+            <p class="disclaimer">Do not make any major financial decisions without consulting a qualified specialist such as an accountant or financial adviser. This calculator uses UK income tax calculations &ndash; excluding Scotland.</p>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
