@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pension Tax Calculator 2025/26</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f6fa;
+            color: #2d3436;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px 16px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        header p {
+            color: #636e72;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper .currency-symbol {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 12px 10px 28px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4a6cf7;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .result-item {
+            background: #f8f9ff;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .result-item.highlight {
+            background: #4a6cf7;
+            color: #fff;
+        }
+
+        .result-item .result-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.7;
+            margin-bottom: 4px;
+        }
+
+        .result-item .result-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .result-item.highlight .result-label {
+            opacity: 0.85;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead th {
+            text-align: left;
+            padding: 10px 12px;
+            background: #f8f9ff;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+        }
+
+        thead th:not(:first-child) {
+            text-align: right;
+        }
+
+        tbody td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        tbody td:not(:first-child) {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        tfoot td {
+            padding: 10px 12px;
+            font-weight: 700;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        tfoot td:not(:first-child) {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .band-name {
+            font-weight: 500;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #999;
+            margin-top: 16px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" ng-controller="MyCtrl" ng-init="init()">
+        <header>
+            <h1>Pension Tax Calculator</h1>
+            <p>UK Income Tax Rates 2025/26</p>
+        </header>
+
+        <div class="card">
+            <h2>Your Details</h2>
+            <div class="form-group">
+                <label for="income">Annual income (before tax)</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">&pound;</span>
+                    <input type="number" id="income" ng-model="userInfo.income" ng-change="updateposition()" placeholder="e.g. 35000" min="0">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="pension">Pension withdrawal amount</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">&pound;</span>
+                    <input type="number" id="pension" ng-model="userInfo.pensionwithdrwal" ng-change="updateposition()" placeholder="e.g. 10000" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="card" ng-show="userInfo.income > 0 || userInfo.pensionwithdrwal > 0">
+            <h2>Summary</h2>
+            <div class="results-grid">
+                <div class="result-item">
+                    <div class="result-label">Total Income</div>
+                    <div class="result-value">&pound;{{totalincome() | number:0}}</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Total Tax</div>
+                    <div class="result-value">&pound;{{sumValue(taxbands, 'amountoftaxtotal') | number:0}}</div>
+                </div>
+                <div class="result-item highlight">
+                    <div class="result-label">Tax on Pension</div>
+                    <div class="result-value">&pound;{{totaltax() | number:0}}</div>
+                </div>
+                <div class="result-item highlight">
+                    <div class="result-label">Effective Pension Tax Rate</div>
+                    <div class="result-value">{{taxPercentage() | number:1}}%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" ng-show="userInfo.income > 0 || userInfo.pensionwithdrwal > 0">
+            <h2>Tax Breakdown</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Band</th>
+                        <th>Rate</th>
+                        <th>Taxable Amount</th>
+                        <th>Tax on Income</th>
+                        <th>Tax on Pension</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="band in taxbands | taxbandfilter:userInfo.income:totalincome()">
+                        <td class="band-name">
+                            <span ng-if="band.rate == 0">Personal Allowance</span>
+                            <span ng-if="band.rate == 20">Basic Rate</span>
+                            <span ng-if="band.rate == 40">Higher Rate</span>
+                            <span ng-if="band.rate == 45">Additional Rate</span>
+                        </td>
+                        <td>{{band.rate}}%</td>
+                        <td>&pound;{{band.taxableamounttotal | number:0}}</td>
+                        <td>&pound;{{band.amountoftaxincome | number:0}}</td>
+                        <td>&pound;{{band.taxonpension | number:0}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td></td>
+                        <td>&pound;{{sumValue(taxbands, 'amountoftaxincome') | number:0}}</td>
+                        <td>&pound;{{totaltax() | number:0}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="card" ng-hide="userInfo.income > 0 || userInfo.pensionwithdrwal > 0">
+            <div class="empty-state">
+                Enter your income and pension withdrawal amount above to see the tax breakdown.
+            </div>
+        </div>
+
+        <p class="note">
+            Based on HMRC rates for England, Wales &amp; Northern Ireland 2025/26. Scottish rates differ.
+            This is for guidance only and does not constitute tax advice.
+        </p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <script src="tax-calculator.js"></script>
+</body>
+</html>
